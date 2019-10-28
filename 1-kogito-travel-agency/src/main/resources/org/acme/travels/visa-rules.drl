@@ -1,0 +1,30 @@
+package org.acme.travels;
+
+import org.acme.travels.*;
+
+rule "Polish citizens require visa to US"
+	ruleflow-group "visas"
+	when
+		$trip: Trip($trip.country == "US")
+		$traveller : Traveller($traveller.nationality == "Polish")
+	then
+		$trip.setVisaRequired( true );
+end
+
+rule "Polish citizens do not require visa to UK"
+	ruleflow-group "visas"
+	when
+		$trip: Trip($trip.country == "UK")
+		$traveller : Traveller($traveller.nationality == "Polish")
+	then
+		$trip.setVisaRequired( false );
+end
+
+rule "Polish citizens require visa to Australia"
+	ruleflow-group "visas"
+	when
+		$trip: Trip($trip.country == "Australia")
+		$traveller : Traveller($traveller.nationality == "Polish")
+	then
+		$trip.setVisaRequired( true );
+end
