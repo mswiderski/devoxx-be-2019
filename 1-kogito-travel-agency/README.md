@@ -4,12 +4,60 @@
 
 During this workshop we will create a software system for a startup travel agency called Kogito Travel Agency. The first iteration of the system will consist of a set of services that are able to deal with travel requests and the booking of hotels and flights.
 
+## Installing and Running
+
+### Prerequisites
+
+You will need:
+  - Java 1.8.0+ installed
+  - Environment variable JAVA_HOME set accordingly
+  - Maven 3.5.4+ installed
+  - **Visual Studio Code**
+
+To install the Kogito extension type in your terminal :
+
+```
+$ curl -L http://bit.ly/get-kogito-ext | sh     
+```
+
+or [download and install it manually](https://github.com/kiegroup/kogito-tooling/releases/tag/0.2.0) 
+
+Optionally, for native compilation, you will also need:
+  - GraalVM installed
+  - Environment variable GRAALVM_HOME set accordingly
+  - Note that GraalVM native image compilation typically requires other packages (glibc-devel, zlib-devel and gcc) to be installed too, please refer to GraalVM installation documentation for more details.
+
+### Compile and Run in Local Dev Mode
+
+```
+mvn clean package quarkus:dev    
+```
+
+NOTE: With dev mode of Quarkus you can take advantage of hot reload for business assets like processes, rules and decision
+tables and java code. No need to redeploy or restart your running application.
+
+
+### Compile and Run using Local Native Image
+Note that this requires GRAALVM_HOME to point to a valid GraalVM installation
+
+```
+mvn clean package -Pnative
+```
+
+To run the generated native executable, generated in `target/`, execute
+
+```
+./target/kogito-travel-agency-{version}-runner
+```
+
+
+
 ## Activities to perform
 
 * Create project using Quarkus Maven plugin with following extensions
 	* Kogito
 	* OpenApi
-* Import project into Eclipse IDE - requires BPMN modeller plugin installed
+* Import project into Visual Studio Code IDE - requires BPMN modeller plugin installed
 * Create data model
 	* Traveller
 	* Hotel
@@ -59,15 +107,23 @@ Location that is associated with either traveller or hotel
 
 ## Decision logic
 
-The decision logic will be implemented as a decision table. The logic will be responsible for verifying whether a given traveller requires a visa to enter a given country or not. The decision logic reason over the following data/facts
+The decision logic will be implemented as DRL rules. The logic will be responsible for verifying whether a given traveller requires a visa to enter a given country or not. The decision logic reason over the following data/facts
 
 * Destination that the traveller wants to go - country
 * Nationality of the traveller
 * Length of the stay
 
-The result will be “yes” or “no”.
+e.g.:
 
-<p align="center"><img width=75% height=50% src="docs/images/decisiontable.png"></p>
+```java
+rule "Polish citizens do not require visa to US"
+	when
+		$trip: /trips[ $trip.country == "US" ]
+		$traveller: /travellers[ $traveller.nationality == "Polish" ]
+	then
+		$trip.setVisaRequired( true );
+end
+```
 
 
 ## Business logic
@@ -92,49 +148,6 @@ There will be services implemented to carry on the hotel and flight booking. Imp
 
 * org.acme.travels.service.HotelBookingService
 * org.acme.travels.service.FlightBookingService
-
-
-
-# Try out the complete service
-
-## Installing and Running
-
-### Prerequisites
-
-You will need:
-  - Java 1.8.0+ installed
-  - Environment variable JAVA_HOME set accordingly
-  - Maven 3.5.4+ installed
-
-When using native image compilation, you will also need:
-  - GraalVM installed
-  - Environment variable GRAALVM_HOME set accordingly
-  - Note that GraalVM native image compilation typically requires other packages (glibc-devel, zlib-devel and gcc) to be installed too, please refer to GraalVM installation documentation for more details.
-
-### Compile and Run in Local Dev Mode
-
-```
-mvn clean package quarkus:dev    
-```
-
-NOTE: With dev mode of Quarkus you can take advantage of hot reload for business assets like processes, rules and decision
-tables and java code. No need to redeploy or restart your running application.
-
-
-### Compile and Run using Local Native Image
-Note that this requires GRAALVM_HOME to point to a valid GraalVM installation
-
-```
-mvn clean package -Pnative
-```
-
-To run the generated native executable, generated in `target/`, execute
-
-```
-./target/kogito-travel-agency-{version}-runner
-```
-
-## Known issues
 
 ## User interface
 
