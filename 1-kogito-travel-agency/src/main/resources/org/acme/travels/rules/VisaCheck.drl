@@ -1,0 +1,38 @@
+package org.acme.travels.rules;
+unit VisaCheck;
+
+import org.acme.travels.*;
+
+
+rule "Italian citizens do not require visa to US"
+	when
+		$trip: /trips[ $trip.country == "US" ]
+		$traveller: /travellers[ $traveller.nationality == "Italian" ]
+	then
+		$trip.setVisaRequired( false );
+end
+
+rule "Polish citizens do not require visa to US"
+	when
+		$trip: /trips[ $trip.country == "US" ]
+		$traveller: /travellers[ $traveller.nationality == "Polish" ]
+	then
+		$trip.setVisaRequired( true );
+end
+
+rule "Polish citizens do not require visa to UK"
+	when
+		$trip: /trips[ $trip.country == "UK" ]
+		$traveller:  /travellers[ $traveller.nationality == "Polish" ]
+	then
+		$trip.setVisaRequired( false );
+end
+
+rule "Polish citizens require visa to Australia"
+	when
+		$trip:  /trips[ $trip.country == "Australia" ]
+		$traveller : /travellers[ $traveller.nationality == "Polish" ]
+	then
+		$trip.setVisaRequired( true );
+end
+
