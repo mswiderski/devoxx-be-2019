@@ -16,6 +16,7 @@ import org.acme.travels.Flight;
 import org.acme.travels.Hotel;
 import org.acme.travels.Traveller;
 import org.acme.travels.Trip;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.kie.kogito.Model;
 import org.kie.kogito.process.Process;
@@ -24,6 +25,7 @@ import org.kie.kogito.process.WorkItem;
 
 import io.quarkus.test.junit.QuarkusTest;
 
+@Disabled("Disabled by default as it requires inifinispan")
 @QuarkusTest
 public class TravelTest {
 
