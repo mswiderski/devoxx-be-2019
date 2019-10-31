@@ -153,21 +153,21 @@
             var productAction = $("#productAction");
             productAction.unbind();
             var modal = $(this);
-            modal.find('.modal-title').text("Plan new trip");
-            modal.find('#firstName').val("");
-            modal.find('#lastName').val("");
-            modal.find('#email').val("");
-            modal.find('#nationality').val("");
+			modal.find('.modal-title').text("Plan new trip");
+            modal.find('#firstName').val("Jan");
+            modal.find('#lastName').val("Kowalski");
+            modal.find('#email').val("jan@email.com");
+            modal.find('#nationality').val("Polish");
 
-            modal.find('#street').val("");
-            modal.find('#city').val("");
-            modal.find('#zipCode').val("");
-            modal.find('#country').val("");
+            modal.find('#street').val("Polna");
+            modal.find('#city').val("Krakow");
+            modal.find('#zipCode').val("32-000");
+            modal.find('#country').val("Poland");
 
-            modal.find('#destinationCountry').val("");
-            modal.find('#destinationCity').val("");
-            modal.find('#tripBegin').val("");
-            modal.find('#tripEnd').val("");
+            modal.find('#destinationCountry').val("US");
+            modal.find('#destinationCity').val("New York");
+            modal.find('#tripBegin').val("2019-11-04");
+            modal.find('#tripEnd').val("2019-11-07");
 
             productAction.click(function () {
 
